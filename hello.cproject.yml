@@ -1,0 +1,60 @@
+project:
+
+  groups:
+    - group: Documentation
+      files:
+        - file: README.md
+    - group: Application
+      files:
+        - file: hello.c
+    - group: Board
+      files:
+        - file: main.c
+        - file: retarget_stdio.c
+
+  define:
+    - XIP_BOOT_HEADER_ENABLE: 1
+    - XIP_EXTERNAL_FLASH: 1
+
+  linker:
+    - define:
+      - XIP_BOOT_HEADER_ENABLE: 1
+    - script: RTE/Device/MIMXRT1064DVL6A/MIMXRT1064xxxxx_flexspi_nor.scf
+
+  misc:
+    - Link:
+      - '--predefine="-DXIP_BOOT_HEADER_ENABLE=1"'
+
+  components:
+    - component: CMSIS:CORE
+    - component: CMSIS:RTOS2:Keil RTX5&Source
+
+    - component: CMSIS-Compiler:I/O:STDOUT&User
+
+    - component: Device:Startup
+
+    - component: NXP::Device:CMSIS:MIMXRT1064_header
+    - component: NXP::Device:CMSIS:MIMXRT1064_system
+
+    - component: NXP::Device:SDK Drivers:clock
+    - component: NXP::Device:SDK Drivers:common
+    - component: NXP::Device:SDK Drivers:gpio
+    - component: NXP::Device:SDK Drivers:iomuxc
+    - component: NXP::Device:SDK Drivers:lists
+    - component: NXP::Device:SDK Drivers:lpuart
+    - component: NXP::Device:SDK Drivers:lpuart_adapter
+    - component: NXP::Device:SDK Drivers:nic301
+    - component: NXP::Device:SDK Drivers:xip_device
+
+    - component: NXP::Device:SDK Utilities:assert
+    - component: NXP::Device:SDK Utilities:debug_console
+    - component: NXP::Device:SDK Utilities:serial_manager
+    - component: NXP::Device:SDK Utilities:serial_manager_uart
+
+    - component: NXP::Board Support:SDK Drivers:evkmimxrt1064
+    - component: NXP::Board Support:SDK Project Template:project_template&evkmimxrt1064
+
+  output:
+    type:
+      - elf
+      - hex
