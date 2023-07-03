@@ -17,8 +17,6 @@ project:
     - XIP_EXTERNAL_FLASH: 1
 
   linker:
-    - define:
-      - XIP_BOOT_HEADER_ENABLE: 1
     - script: RTE/Device/MIMXRT1064DVL6A/MIMXRT1064xxxxx_flexspi_nor.scf
 
   misc:
