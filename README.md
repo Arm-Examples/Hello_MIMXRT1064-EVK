@@ -3,6 +3,8 @@
 Simple Hello World example for NXP [MIMXRT1064-EVK](https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/i-mx-rt1064-evaluation-kit:MIMXRT1064-EVK) Evaluation Kit.
 This example prints "Hello World" and a counter value via the standard output which is routed to the debug console through Virtual COM port.
 
+[![Open in Code - Clone this repository to Visual Studio Code](https://img.shields.io/badge/Open_in_Code-Clone_this_repository_to_Visual_Studio_Code-0091bd?logo=visual-studio-code)](vscode://arm.keil-studio-pack/clone?url=https://github.com/Arm-Examples/Hello_MIMXRT1064-EVK)
+
 ## Prerequisites
 
 ### Tools:
