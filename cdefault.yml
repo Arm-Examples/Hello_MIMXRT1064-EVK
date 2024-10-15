@@ -36,7 +36,8 @@ default:
         - --info unused
         - --info veneers
         - --list
-        - --remove --entry=Reset_Handler
+        - --remove 
+        - --entry=Reset_Handler
         - --strict
         - --diag_suppress 6314
         - --summary_stderr
