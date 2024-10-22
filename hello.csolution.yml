@@ -2,7 +2,7 @@ solution:
   description: Simple Hello World example for MIMXRT1064-EVK
   created-for: CMSIS-Toolbox@2.6.0
   compiler: AC6
-  cdefault: ./cdefault.yml
+  cdefault:
 
   packs:
     - pack: ARM::CMSIS@5.9.0
