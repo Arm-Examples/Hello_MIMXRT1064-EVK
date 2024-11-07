@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,20 +13,18 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v6.0
+product: Peripherals v8.0
 processor: MIMXRT1064xxxxA
+package_id: MIMXRT1064DVL6A
 mcu_data: ksdk2_0
-processor_version: 0.0.9
+processor_version: 0.8.2
+board: MIMXRT1064-EVK
 functionalGroups:
 - name: BOARD_InitPeripherals
+  UUID: 1c6563a6-c68b-40e5-8828-2853c99f95fa
   called_from_default_init: true
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-component:
-- type: 'system'
-- type_id: 'system_54b53072540eeeb8f8e9343e71f28176'
-- global_system_definitions: []
+  id_prefix: BOARD_
+  selectedCore: core0
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -47,5 +45,5 @@ void BOARD_InitPeripherals(void)
  **********************************************************************************************************************/
 void BOARD_InitBootPeripherals(void)
 {
-    BOARD_InitPeripherals();
+  BOARD_InitPeripherals();
 }

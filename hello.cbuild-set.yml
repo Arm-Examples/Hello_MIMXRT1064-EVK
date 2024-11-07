@@ -1,5 +1,4 @@
 cbuild-set:
   generated-by: csolution version 2.6.0
   contexts:
-    - context: hello.Release+MIMXRT1064-EVK  
-    - context: hello.Debug+MIMXRT1064-EVK
+    - context: hello.Release+MIMXRT1064-EVK

@@ -230,11 +230,46 @@ status_t BOARD_Camera_I2C_ReceiveSCCB(
     return BOARD_LPI2C_ReceiveSCCB(BOARD_CAMERA_I2C_BASEADDR, deviceAddress, subAddress, subAddressSize, rxBuff,
                                    rxBuffSize);
 }
+
+status_t BOARD_Touch_I2C_Send(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, const uint8_t *txBuff, uint8_t txBuffSize)
+{
+    return BOARD_LPI2C_Send(BOARD_TOUCH_I2C_BASEADDR, deviceAddress, subAddress, subAddressSize, (uint8_t *)txBuff,
+                            txBuffSize);
+}
+
+status_t BOARD_Touch_I2C_Receive(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize)
+{
+    return BOARD_LPI2C_Receive(BOARD_TOUCH_I2C_BASEADDR, deviceAddress, subAddress, subAddressSize, rxBuff, rxBuffSize);
+}
 #endif /* SDK_I2C_BASED_COMPONENT_USED */
 
 /* MPU configuration. */
 void BOARD_ConfigMPU(void)
 {
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
+    extern uint32_t Image$$RW_m_ncache$$Base[];
+    /* RW_m_ncache_unused is a auxiliary region which is used to get the whole size of noncache section */
+    extern uint32_t Image$$RW_m_ncache_unused$$Base[];
+    extern uint32_t Image$$RW_m_ncache_unused$$ZI$$Limit[];
+    uint32_t nonCacheStart = (uint32_t)Image$$RW_m_ncache$$Base;
+    uint32_t size          = ((uint32_t)Image$$RW_m_ncache_unused$$Base == nonCacheStart) ?
+                        0 :
+                        ((uint32_t)Image$$RW_m_ncache_unused$$ZI$$Limit - nonCacheStart);
+#elif defined(__MCUXPRESSO)
+    extern uint32_t __base_NCACHE_REGION;
+    extern uint32_t __top_NCACHE_REGION;
+    uint32_t nonCacheStart = (uint32_t)(&__base_NCACHE_REGION);
+    uint32_t size          = (uint32_t)(&__top_NCACHE_REGION) - nonCacheStart;
+#elif defined(__ICCARM__) || defined(__GNUC__)
+    extern uint32_t __NCACHE_REGION_START[];
+    extern uint32_t __NCACHE_REGION_SIZE[];
+    uint32_t nonCacheStart = (uint32_t)__NCACHE_REGION_START;
+    uint32_t size          = (uint32_t)__NCACHE_REGION_SIZE;
+#endif
+    volatile uint32_t i = 0;
+
     /* Disable I cache and D cache */
     if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR))
     {
@@ -332,6 +367,23 @@ void BOARD_ConfigMPU(void)
     /* Region 9 setting: Memory with Normal type, not shareable, outer/inner write back */
     MPU->RBAR = ARM_MPU_RBAR(9, 0x80000000U);
     MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 1, 0, ARM_MPU_REGION_SIZE_32MB);
+
+    while ((size >> i) > 0x1U)
+    {
+        i++;
+    }
+
+    if (i != 0)
+    {
+        /* The MPU region size should be 2^N, 5<=N<=32, region base should be multiples of size. */
+        assert(!(nonCacheStart % size));
+        assert(size == (uint32_t)(1 << i));
+        assert(i >= 5);
+
+        /* Region 10 setting: Memory with Normal type, not shareable, non-cacheable */
+        MPU->RBAR = ARM_MPU_RBAR(10, nonCacheStart);
+        MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 1, 0, 0, 0, 0, i - 1);
+    }
 
     /* Region 11 setting: Memory with Device type, not shareable, non-cacheable */
     MPU->RBAR = ARM_MPU_RBAR(11, 0x40000000);
