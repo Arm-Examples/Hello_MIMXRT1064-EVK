@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------
- * Copyright (c) 2021-2023 Arm Limited (or its affiliates). 
+ * Copyright (c) 2021-2024 Arm Limited (or its affiliates).
  * All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -17,10 +17,6 @@
  * limitations under the License.
  *---------------------------------------------------------------------------*/
 
-#include "RTE_Components.h"
-#include  CMSIS_device_header
-#include "cmsis_os2.h"
-
 #include "clock_config.h"
 #include "board.h"
 #include "pin_mux.h"
@@ -35,9 +31,7 @@ int main (void) {
   BOARD_InitBootClocks();
   BOARD_InitDebugConsole();
 
-  osKernelInitialize();                 // Initialize CMSIS-RTOS2
-  app_initialize();                     // Initialize application
-  osKernelStart();                      // Start thread execution
+  app_main();                           // Execute Application main
 
   for (;;) {}
 }

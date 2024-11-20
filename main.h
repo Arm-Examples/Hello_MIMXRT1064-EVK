@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------
- * Copyright (c) 2021-2023 Arm Limited (or its affiliates). 
+ * Copyright (c) 2021-2024 Arm Limited (or its affiliates).
  * All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -21,6 +21,6 @@
 #define MAIN_H__
 
 /* Prototypes */
-extern void app_initialize (void);
+extern int app_main (void);
 
 #endif

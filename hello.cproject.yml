@@ -1,24 +1,8 @@
+# A project translates into one executable or library.
 project:
 
-  groups:
-    - group: Documentation
-      files:
-        - file: README.md
-    - group: Application
-      files:
-        - file: hello.c
-    - group: Board
-      files:
-        - file: main.c
-        - file: retarget_stdio.c
-
-  define:
-    - XIP_BOOT_HEADER_ENABLE: 1
-    - XIP_EXTERNAL_FLASH: 1
-
-  linker:
-    - script: RTE/Device/MIMXRT1064DVL6A/MIMXRT1064xxxxx_flexspi_nor.scf
-
+  # List components to use for your application.
+  # A software component is a re-usable unit that may be configurable.
   components:
     - component: CMSIS:CORE
     - component: CMSIS:RTOS2:Keil RTX5&Source
@@ -45,3 +29,24 @@ project:
 
     - component: Board Support:SDK Drivers:evkmimxrt1064
     - component: Board Support:SDK Project Template:project_template&evkmimxrt1064
+
+  # List of source groups and files added to a project or a layer.
+  groups:
+    - group: Documentation
+      files:
+        - file: README.md
+    - group: Application
+      files:
+        - file: hello.c
+    - group: Board
+      files:
+        - file: main.c
+        - file: retarget_stdio.c
+
+  define:
+    - XIP_BOOT_HEADER_ENABLE: 1
+    - XIP_EXTERNAL_FLASH: 1
+
+  linker:
+    - script: RTE/Device/MIMXRT1064DVL6A/MIMXRT1064xxxxx_flexspi_nor.scf
+      for-compiler: AC6
