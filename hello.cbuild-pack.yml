@@ -3,16 +3,12 @@ cbuild-pack:
     - resolved-pack: ARM::CMSIS@5.9.0
       selected-by-pack:
         - ARM::CMSIS
-        - ARM::CMSIS@5.9.0
     - resolved-pack: ARM::CMSIS-Compiler@1.0.0
       selected-by-pack:
         - ARM::CMSIS-Compiler
-        - ARM::CMSIS-Compiler@1.0.0
     - resolved-pack: NXP::EVK-MIMXRT1064_BSP@16.0.0
       selected-by-pack:
         - NXP::EVK-MIMXRT1064_BSP
-        - NXP::EVK-MIMXRT1064_BSP@16.0.0
     - resolved-pack: NXP::MIMXRT1064_DFP@16.0.0
       selected-by-pack:
         - NXP::MIMXRT1064_DFP
-        - NXP::MIMXRT1064_DFP@16.0.0

@@ -20,9 +20,18 @@ solution:
   target-types:
     - type: MIMXRT1064-EVK
       board: NXP::EVK-MIMXRT1064
+      target-set:
+        - set:
+          debugger:
+            name: CMSIS-DAP@pyOCD
+            port: 3333
+            protocol: swd
+            clock: 10000000
+          images:
+            - project-context: hello.Release
 
-  # List of different build configurations.
   build-types:
+
     - type: Debug
       debug: on
       optimize: debug
@@ -30,6 +39,15 @@ solution:
     - type: Release
       debug: off
       optimize: balanced
+
+  misc:
+    - for-compiler: AC6
+      C-CPP:
+        - -gdwarf-5
+      ASM:
+        - -gdwarf-5
+      Link:
+        - --entry=Reset_Handler
 
   # List related projects.
   projects:

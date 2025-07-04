@@ -50,3 +50,9 @@ project:
   linker:
     - script: RTE/Device/MIMXRT1064DVL6A/MIMXRT1064xxxxx_flexspi_nor.scf
       for-compiler: AC6
+
+  output:
+    type:
+     - elf
+     - hex
+     - map
